@@ -75,7 +75,7 @@ unlink(temp)
 
 Independent analysis and confirmation of effective reproduction number based on data on new daily admissions provided from Statens Serum Institut (SSI). 
 
-The calculation of the effective reproduction number depends in part of the quality of the raw data that captured the dynamic of the epidemic. In Denmark, the focus is on new admissions due to COVID-19. If the criteria/indications for admissions changes over calendar time, this will affect the effective reproduction number - although such a change is an artefact and not grounded by biology. Eg. the increase of the effective reproduction number in April is likely such an artefact. Further, the result of this analysis can change if the retrospective dataset of new admissions from SSI is updated.
+The calculation of the effective reproduction number depends in part of the quality of the raw data that captured the dynamic of the epidemic. In Denmark, the focus is on new admissions due to COVID-19. If the criteria/indications for admissions changes over calendar time, this will affect the effective reproduction number - although such a change is an artefact and not grounded by biology. Eg. the increase of the effective reproduction number in April is likely such an artefact. Further, the result of this analysis can change if the retrospective dataset of new admissions from SSI is updated. Similarly, due to reporting delay, the estimated reproduction number for the last 3-5 days should not be considered.
 
 The data used for this automatically generated report is based on the latest data available from the [SSI website](https://www.ssi.dk/aktuelt/sygdomsudbrud/coronavirus/covid-19-i-danmark-epidemiologisk-overvaagningsrapport) for [daily new admissions](`r url_to_down`)
 
@@ -138,8 +138,8 @@ Code suggestions from [Tim Churches Health Data Science Blog](https://timchurche
 
 To report any error please do it to the following mail: adrian.gabriel.zucco(at)regionh.dk
 
- <!-- ```{r, echo = FALSE} -->
- <!-- HTML('<center><img src="http://www.persimune.dk/Portals/0/Images/PERSIMUNE%20m%20txt3.png?ver=2015-01-30-091850-000"></center>') -->
- <!-- ``` -->
+Changes can be found in the [source code repository for a static version of this document](https://github.com/adrigabzu/reproductive_rate_DK/commits/master).
+
+<center><img src="http://www.persimune.dk/Portals/0/Images/PERSIMUNE%20m%20txt3.png?ver=2015-01-30-091850-000"></center>
 
 
