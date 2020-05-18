@@ -56,7 +56,7 @@ temp <- tempfile()
 base_url<- "https://www.ssi.dk/aktuelt/sygdomsudbrud/coronavirus/covid-19-i-danmark-epidemiologisk-overvaagningsrapport"
 pg <- read_html(base_url)
 links <- html_attr(html_nodes(pg, "a"), "href")
-url_to_down <- links %>% .[grepl("files.ssi.dk/Data-Epidemiologiske-Rapport-", .)]
+url_to_down <- links %>% .[grepl("files.ssi.dk/Data-Epidemiologiske-Rapport-|files.ssi.dk/.+pidemiologisk.+apport", ., ignore.case = T)]
 
 download.file(paste0(url_to_down,".zip") ,temp)
 
@@ -125,7 +125,7 @@ R_estimated <- round(res_R$R, 3)
 R_estimated <- R_estimated %>% mutate("Start date" = to_estim$dates[R_estimated$t_start], 
                                             "End date" = to_estim$dates[R_estimated$t_end])
 
-R_toshow <- R_estimated %>% select(`Start date`, `End date`, `Mean(R)`, `Std(R)`, `Median(R)`)#,starts_with("Quant"))
+R_toshow <- R_estimated %>% select(`Start date`, `End date`, `Mean(R)`, `Std(R)`, `Median(R)`, `Quantile.0.05(R)`, `Quantile.0.95(R)`)
 
 datatable(R_toshow,  filter = 'top')
 ```
