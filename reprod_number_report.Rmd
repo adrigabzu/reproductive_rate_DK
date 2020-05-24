@@ -53,7 +53,7 @@ if( hms(format(Sys.time(), "%H:%M:%S")) > hms("14:15:00")){
 # GET SSI DATA
 temp <- tempfile()
 
-base_url<- "https://www.ssi.dk/aktuelt/sygdomsudbrud/coronavirus/covid-19-i-danmark-epidemiologisk-overvaagningsrapport"
+base_url<- "https://www.ssi.dk/sygdomme-beredskab-og-forskning/sygdomsovervaagning/c/covid19-overvaagning"
 pg <- read_html(base_url)
 links <- html_attr(html_nodes(pg, "a"), "href")
 url_to_down <- links %>% .[grepl("files.ssi.dk/Data-Epidemiologiske-Rapport-|files.ssi.dk/.+pidemiologisk.+apport", ., ignore.case = T)]
@@ -81,7 +81,7 @@ The data used for this automatically generated report is based on the latest dat
 
 ```{r warning=FALSE}
 # Adapt format to EpiEstim
-to_estim <- new_adm %>% rename(dates = Dato, I = Antal_nyindlagte) %>% 
+to_estim <- new_adm %>% rename(dates = Dato, I = Total) %>% 
   filter(dates >= (dmy(14032020)))
   
 ```
@@ -125,7 +125,7 @@ R_estimated <- round(res_R$R, 3)
 R_estimated <- R_estimated %>% mutate("Start date" = to_estim$dates[R_estimated$t_start], 
                                             "End date" = to_estim$dates[R_estimated$t_end])
 
-R_toshow <- R_estimated %>% select(`Start date`, `End date`, `Mean(R)`, `Std(R)`, `Median(R)`, `Quantile.0.05(R)`, `Quantile.0.95(R)`)
+R_toshow <- R_estimated %>% select(`Start date`, `End date`, `Mean(R)`, `Std(R)`, `Median(R)`, `Quantile.0.025(R)`, `Quantile.0.975(R)`)
 
 datatable(R_toshow,  filter = 'top')
 ```
