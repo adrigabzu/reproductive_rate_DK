@@ -1,13 +1,13 @@
 ---
 title: "Reproductive rate estimation of SARS-CoV-2 in Denmark"
 author: "Adrian G. Zucco (M.Sc, PhDc) and Kasper S. Moestrup (MD, PhDc) @PERSIMUNE"
-# date: "Compiled at `r format(Sys.time() + 2*60*60 , '%d/%m/%Y - %H:%M')`"
 date: "Compiled at `r format(Sys.time() , '%d/%m/%Y - %H:%M')`"
-output: 
+output:
+  # word_document: default
+  # pdf_document: default
   html_document:
+    code_folding: hide
     theme: united
-    code_folding: "hide"
-# runtime: shiny
 ---
 
 <!-- + 2 hours added due to timezone in shinyapps.io -->
@@ -33,10 +33,10 @@ knitr::opts_chunk$set(
 
 
 ```{r warning=FALSE}
-
 library(EpiEstim)
 library(tidyverse)
 library(lubridate)
+library(stringi)
 library(DT)
 library(plotly)
 library(rvest)
@@ -53,12 +53,13 @@ if( hms(format(Sys.time(), "%H:%M:%S")) > hms("14:15:00")){
 # GET SSI DATA
 temp <- tempfile()
 
-base_url<- "https://www.ssi.dk/sygdomme-beredskab-og-forskning/sygdomsovervaagning/c/covid19-overvaagning"
+base_url<- "https://covid19.ssi.dk/overvagningsdata/download-fil-med-overvaagningdata"
 pg <- read_html(base_url)
 links <- html_attr(html_nodes(pg, "a"), "href")
 url_to_down <- links %>% .[grepl("files.ssi.dk/Data-Epidemiologiske-Rapport-|files.ssi.dk/.+pidemiologisk.+apport", ., ignore.case = T)]
+url_to_down<- stri_replace_all_charclass(url_to_down, "\\p{WHITE_SPACE}", "")
 
-download.file(paste0(url_to_down,".zip") ,temp)
+download.file(paste0(url_to_down[1],".zip") ,temp)
 
 # Unzip the file
 file_admitted <- unz(temp, "Newly_admitted_over_time.csv")
@@ -66,7 +67,6 @@ file_admitted <- unz(temp, "Newly_admitted_over_time.csv")
 # Read the data
 new_adm <- read_csv2(file_admitted)
 unlink(temp)
-
 ```
 
 <!-- <img src="http://www.persimune.dk/Portals/0/Images/PERSIMUNE%20m%20txt3.png?ver=2015-01-30-091850-000" style="float:right"> -->
